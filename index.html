@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Standard Calculator</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f2f2f2;
+}
+
+.calculator{
+width:250px;
+margin:60px auto;
+padding:15px;
+background:#dcdcdc;
+border-radius:10px;
+text-align:center;
+}
+
+.history{
+height:20px;
+text-align:right;
+font-size:14px;
+color:gray;
+}
+
+#display{
+width:100%;
+height:40px;
+font-size:22px;
+text-align:right;
+margin-bottom:10px;
+}
+
+button{
+width:50px;
+height:40px;
+margin:2px;
+font-size:16px;
+}
+
+.clear{
+width:210px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="calculator">
+
+<div id="history" class="history"></div>
+<input type="text" id="display" value="0" disabled>
+
+<!-- row 1 -->
+<button onclick="press(7)">7</button>
+<button onclick="press(8)">8</button>
+<button onclick="press(9)">9</button>
+<button onclick="operator('+')">+</button>
+
+<br>
+
+<!-- row 2 -->
+<button onclick="press(4)">4</button>
+<button onclick="press(5)">5</button>
+<button onclick="press(6)">6</button>
+<button onclick="operator('-')">-</button>
+
+<br>
+
+<!-- row 3 -->
+<button onclick="press(1)">1</button>
+<button onclick="press(2)">2</button>
+<button onclick="press(3)">3</button>
+<button onclick="operator('*')">*</button>
+
+<br>
+
+<!-- row 4 -->
+<button onclick="developer()">A</button>
+<button onclick="press(0)">0</button>
+<button onclick="appInfo()">B</button>
+<button onclick="operator('/')">/</button>
+
+<br>
+
+<!-- row 5 -->
+
+<button onclick="equal()">=</button>
+
+<br>
+
+<button class="clear" onclick="clearAll()">Clear</button>
+
+</div>
+
+<script>
+
+let firstNumber = "";
+let currentOperator = "";
+let waitingForSecond = false;
+
+function press(num){
+
+let display = document.getElementById("display");
+
+if(display.value === "0" || waitingForSecond){
+display.value = num;
+waitingForSecond = false;
+}else{
+display.value += num;
+}
+
+}
+
+function operator(op){
+
+let display = document.getElementById("display");
+let history = document.getElementById("history");
+
+firstNumber = display.value;
+currentOperator = op;
+
+history.innerHTML = firstNumber + " " + op;
+
+waitingForSecond = true;
+
+}
+
+function equal(){
+
+let display = document.getElementById("display");
+let history = document.getElementById("history");
+
+let secondNumber = display.value;
+
+let result;
+
+if(currentOperator === "+")
+result = Number(firstNumber) + Number(secondNumber);
+
+if(currentOperator === "-")
+result = Number(firstNumber) - Number(secondNumber);
+
+if(currentOperator === "*")
+result = Number(firstNumber) * Number(secondNumber);
+
+if(currentOperator === "/")
+result = Number(firstNumber) / Number(secondNumber);
+
+history.innerHTML = firstNumber + " " + currentOperator + " " + secondNumber;
+
+display.value = result;
+
+}
+
+function clearAll(){
+document.getElementById("display").value = "0";
+document.getElementById("history").innerHTML = "";
+}
+
+function developer(){
+alert("Developer: Rhea Mae Dial      Course: MSIT");
+}
+
+function appInfo(){
+alert("Application: Standard Calculator Web App");
+}
+
+</script>
+
+</body>
+</html>
